@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    <!-- Application Settings -->
+    <app title="Friday Night Funkin'L Syxe Engine" file="SyxeEngine" main="Main" version="1.0.0" company="Huy1234TH" />
+    <app preloader="flixel.system.FlxPreloader" />
+    <set name="SWF_VERSION" value="11.8" />
+
+    <!-- Window Settings -->
+    <window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
+    <window if="html5" resizable="true" />
+    <window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
+    <window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" />
+
+    <!-- Path Settings -->
+    <set name="BUILD_DIR" value="export/debug" if="debug" />
+    <set name="BUILD_DIR" value="export/release" unless="debug" />
+    <source path="source" />
+    <assets path="assets" embed="false" />
+
+    <!-- Libraries -->
+    <haxelib name="flixel" />
+    <haxelib name="flixel-addons" />
+    <haxelib name="flixel-ui" />
+    <haxelib name="hscript" if="debug" />
+    <haxelib name="hscript-iris" />
+    <haxelib name="tjson" />
+
+    <!-- Haxedefines -->
+    <haxedef name="FLX_NO_HEALTH" />
+    <haxedef name="FLX_NO_MOUSE" if="mobile" />
+    <haxedef name="FLX_NO_KEYBOARD" if="mobile" />
+    <haxedef name="FLX_NO_TOUCH" if="desktop" />
+    <haxedef name="FLX_NO_DEBUG" unless="debug" />
+    <haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+    <haxedef name="message.reporting" value="pretty" />
+    <haxedef name="hscriptPos" />
+    <haxeflag name="--macro" value="include('flixel', true, ['flixel.addons.editors.spine.*', 'flixel.addons.nape.*', 'flixel.system.macros.*'])" />
+</project>

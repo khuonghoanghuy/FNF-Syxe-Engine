@@ -1,0 +1,10 @@
+{
+    "nameWeek": "DADDY DEAREST",
+    "colorStoryWeek": "0xff9271fd",
+    "bgWeek": "none",
+    "weekCharacter": ["dad", "bf", "gf"],
+    
+    "songs": ["Bopeebo", "Fresh", "Dad Battle"],
+    "songFreeplayColor": ["0xff9271fd", "0xff9271fd", "0xff9271fd"],
+    "songCharacter": ["dad", "dad", "dad"]
+}
