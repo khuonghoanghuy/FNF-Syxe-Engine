@@ -25,6 +25,8 @@ class StoryMenuState extends MusicBeatState {
     override function create() {
         super.create();
 
+        loadJsonFile();
+
         persistentUpdate = persistentDraw = true;
 
         yellowBG = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFFFFFFF);

@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -33,6 +34,7 @@ class MainMenuState extends MusicBeatState
 		}
 
         versionText = new FlxText(10, FlxG.height - 22, 0, "Syxe Engine v" + Lib.application.meta.get("version"), 12);
+        versionText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
         versionText.scrollFactor.set();
         add(versionText);
     }    
@@ -55,6 +57,9 @@ class MainMenuState extends MusicBeatState
         super.update(elapsed);
 
         mouseHandler();
+
+        if (FlxG.keys.justPressed.F12)
+            openSubState(new debugTest.DebugSubState());
     }
 
     function mouseHandler():Void {

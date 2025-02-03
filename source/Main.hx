@@ -1,5 +1,7 @@
 package;
 
+import flixel.FlxState;
+import openfl.display.FPS;
 import flixel.FlxG;
 import flixel.FlxGame;
 import openfl.display.Sprite;
@@ -9,10 +11,15 @@ import openfl.ui.Keyboard;
 
 class Main extends Sprite
 {
+	var state:Class<FlxState> = TitleState;
+
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(0, 0, TitleState));
+
+		addChild(new FlxGame(0, 0, state));
+		addChild(new FPS(10, 3, 0xFFFFFF));
+
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyFullScreen);
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyRestartGame);
 	}

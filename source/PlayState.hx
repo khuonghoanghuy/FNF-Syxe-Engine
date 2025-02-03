@@ -21,8 +21,6 @@ class PlayState extends FlxState
 	public static var deathCounter:Int = 0;
 	public static var practiceMode:Bool = false;
 
-	var halloweenLevel:Bool = false;
-
 	private var vocals:FlxSound;
 	private var vocalsFinished:Bool = false;
 
@@ -78,14 +76,22 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		super.create();
-
 		stageData = new StageData(SONG.stages);
 		stageData.execute();
+
+		stageData.call("onCreate", []);
+
+		super.create();
+
+		stageData.call("onCreatePost", []);
 	}
 
 	override public function update(elapsed:Float)
 	{
+		stageData.call("onUpdate", [elapsed]);
+
 		super.update(elapsed);
+
+		stageData.call("onUpdatePost", [elapsed]);
 	}
 }

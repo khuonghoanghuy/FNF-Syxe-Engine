@@ -1,5 +1,11 @@
 package;
 
+import openfl.filters.ShaderFilter;
+import flixel.addons.display.FlxRuntimeShader;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
+import flixel.math.FlxMath;
 import crowplexus.iris.Iris;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -17,11 +23,37 @@ class HScript extends Iris
         setLotVar([
             "FlxG",
             "FlxSprite",
-            "FlxCamera"
+            "FlxCamera",
+            "FlxMath",
+            "FlxTimer",
+            "FlxTween",
+            "FlxEase",
+            "PlayState",
+            "Paths",
+            "Conductor",
+            "Character",
+            "Alphabet",
+            "Note",
+            "FlxRuntimeShader",
+            "ShaderFilter",
+            "StringTools"
         ], [
             FlxG,
             FlxSprite,
-            FlxCamera
+            FlxCamera,
+            FlxMath,
+            FlxTimer,
+            FlxTween,
+            FlxEase,
+            PlayState,
+            Paths,
+            Conductor,
+            Character,
+            Alphabet,
+            Note,
+            FlxRuntimeShader,
+            ShaderFilter,
+            StringTools
         ]);
 
         // Function can used

@@ -16,3 +16,5 @@ A small FNF Engine
 * [ ] Still have nothing on PlayState yet!
 * [ ] Freeplay still not done yet!
 * [ ] Credits, Options is not done anything!
+* [ ] Custom State/SubState is not done yet!
+* [ ] Mouse menu nagative is not done yet!

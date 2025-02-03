@@ -1,5 +1,6 @@
 package;
 
+import tjson.TJSON;
 import flixel.FlxSprite;
 import haxe.Json;
 
@@ -36,10 +37,10 @@ class Character extends FlxSprite {
     }
 
     private function loadCharacterData(characterJson:String):Void {
-        var jsonData = Json.parse(characterJson);
+        var jsonData = TJSON.parse(characterJson);
         characterData = cast jsonData;
 
-        frames = Paths.getSparrowAtlas("characters/" + characterData.image);
+        frames = Paths.getSparrowAtlas(characterData.image);
 
         scale.set(characterData.scale[0], characterData.scale[1]);
 
