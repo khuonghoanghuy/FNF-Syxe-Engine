@@ -96,7 +96,7 @@ class Paths {
 			else if (beepOnNull)
 			{
 				trace('oops! sound $key returned null');
-				return FlxAssets.getSound('flixel/sounds/beep');
+				return FlxAssets.getSoundAddExtension('flixel/sounds/beep');
 			}
 		}
 

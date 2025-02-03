@@ -154,7 +154,7 @@ class TitleState extends MusicBeatState
         {
             if (doneCameraFlash) {
                 camera.flash(FlxColor.WHITE, 1, function () {
-                    FlxG.switchState(new MainMenuState());
+                    FlxG.switchState(MainMenuState.new);
                 });
             }
         }

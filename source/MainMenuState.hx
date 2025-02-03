@@ -66,9 +66,9 @@ class MainMenuState extends MusicBeatState
                         if (groupMenuItem.members[i].overlapsPoint(FlxG.mouse.getWorldPosition())) {
                             switch (i) {
                                 case 0: // story mode
-                                    FlxG.switchState(new StoryMenuState());
+                                    FlxG.switchState(StoryMenuState.new);
                                 case 1: // freeplay
-                                    FlxG.switchState(new FreeplayState());
+                                    FlxG.switchState(FreeplayState.new);
                                 case 2: // credits
                                 case 3: // options
                             }
