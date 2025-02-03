@@ -114,9 +114,8 @@ class FreeplayState extends MusicBeatState
 
         positionHighscore();
 
-        if (Controls.justReleased("exit")) {
+        if (Controls.justReleased("exit"))
             FlxG.switchState(MainMenuState.new);
-        }
 
         if (Controls.justPressed("up") || Controls.justPressed("down"))
             changeSelection((Controls.justPressed("up") ? -1 : 1));

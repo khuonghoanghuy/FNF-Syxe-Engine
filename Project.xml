@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
     <!-- Application Settings -->
-    <app title="Friday Night Funkin'L Syxe Engine" file="SyxeEngine" main="Main" version="1.0.0" company="Huy1234TH" />
+    <app title="Friday Night Funkin': Syxe Engine" file="SyxeEngine" main="Main" version="1.0.0" company="Huy1234TH" />
     <app preloader="flixel.system.FlxPreloader" />
     <set name="SWF_VERSION" value="11.8" />
 
