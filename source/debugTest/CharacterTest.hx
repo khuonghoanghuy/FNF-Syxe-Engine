@@ -10,7 +10,7 @@ class CharacterTest extends MusicBeatState
     override function create() {
         super.create();
 
-        character = new Character(0, 0, Paths.data("characters/" + name + ".json"));
+        character = new Character(0, 0, name, false);
         character.animation.play("idle");
         character.screenCenter();
         add(character);
@@ -31,6 +31,15 @@ class CharacterTest extends MusicBeatState
 
         if (FlxG.keys.justPressed.LEFT)
             character.animation.play("singLEFT");
+
+        if (FlxG.keys.justPressed.RIGHT)
+            character.animation.play("singRIGHT");
+
+        if (FlxG.keys.justPressed.UP)
+            character.animation.play("singUP");
+
+        if (FlxG.keys.justPressed.DOWN)
+            character.animation.play("singDOWN");
 
         if (FlxG.keys.justPressed.ESCAPE)
             FlxG.switchState(TitleState.new);
