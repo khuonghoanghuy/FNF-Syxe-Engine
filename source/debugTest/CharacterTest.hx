@@ -1,11 +1,14 @@
 package debugTest;
 
+import flixel.addons.ui.FlxUIList;
 import flixel.FlxG;
 
 class CharacterTest extends MusicBeatState
 {
     var character:Character;
     var name:String = "dad";
+    var list:FlxUIList;
+    var moreVar:String = "More...";
 
     override function create() {
         super.create();
@@ -14,6 +17,10 @@ class CharacterTest extends MusicBeatState
         character.playAnim("idle");
         character.screenCenter();
         add(character);
+
+        list = new FlxUIList(10, 10, null, 100, 100, moreVar);
+
+        camera.zoom = 0.85;
     }    
 
     override function update(elapsed:Float) {
