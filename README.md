@@ -12,9 +12,6 @@ A small FNF Engine
     - This engine is support mouse, you can fully use this for nagative menu and stuff!
 
 # Still in Progress
-* [ ] Story Menu is not done yet!
-* [ ] Still have nothing on PlayState yet!
-* [ ] Freeplay still not done yet!
-* [ ] Credits, Options is not done anything!
-* [ ] Custom State/SubState is not done yet!
-* [ ] Mouse menu nagative is not done yet!
+* [ ] Done Story menu, Freeplay Credits, Options, PlayState and other...
+* [ ] Custom State/SubState script
+* [ ] Mouse menu nagative
