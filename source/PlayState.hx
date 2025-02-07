@@ -76,22 +76,11 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		stageData = new StageData(SONG.stages);
-		stageData.execute();
-
-		stageData.call("onCreate", []);
-
 		super.create();
-
-		stageData.call("onCreatePost", []);
 	}
 
 	override public function update(elapsed:Float)
 	{
-		stageData.call("onUpdate", [elapsed]);
-
 		super.update(elapsed);
-
-		stageData.call("onUpdatePost", [elapsed]);
 	}
 }

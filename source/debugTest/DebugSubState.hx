@@ -6,7 +6,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class DebugSubState extends MusicBeatSubState
 {
-    var arrayList:Array<String> = ["Character JSON"];
+    var arrayList:Array<String> = ["Character JSON", "Stage Test"];
     var groupList:FlxTypedGroup<Alphabet>;
     var curSelected:Int = 0;
 
@@ -36,7 +36,13 @@ class DebugSubState extends MusicBeatSubState
             switch (arrayList[curSelected]) {
                 case "Character JSON":
                     FlxG.switchState(CharacterTest.new);
+                case "Stage Test":
+                    FlxG.switchState(StageTest.new);
             }
+        }
+
+        if (Controls.justPressed("exit")) {
+            close();
         }
     }
 

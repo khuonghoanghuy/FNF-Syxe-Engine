@@ -78,6 +78,7 @@ class HScript extends Iris
 
     public function setLotVar(variable:Array<String>, value:Array<Dynamic>) {
         for (i in 0...variable.length) {
+            var i:Int = 0;
             Reflect.setProperty(this, variable[i], value[i]);
         }
     }
