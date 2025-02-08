@@ -10,7 +10,6 @@ class HighScore
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
 	#end
 
-
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0):Void
 	{
 		var formattedSong:String = formatSong(song, diff);
