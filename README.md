@@ -1,20 +1,8 @@
 # FNF Syxe Engine
-
 A small FNF Engine
 
 ## Feature
-
-- Can run script everywhere
-      - By `global` folder, allow you can run script everywhere!
-- JSON Modding stuff
-      - Allow you add custom week for Freeplay, Story Menu...
-- Allow Custom Menu
-      - With `global` and `states` folder, you can add your own custom State/SubState onto this engine!
-- Fully Mouse Nagative
-      - This engine is support mouse, you can fully use this for nagative menu and stuff!
-
-## Still in Progress
-
-- [ ] Done Story menu, Freeplay Credits, Options, PlayState and other...
-- [ ] Custom State/SubState script
-- [ ] Mouse menu nagative
+* Simple Source: Im organize both assets and source to easy work
+* Only Week 1: This engine only contains week 1, mean the source is very lightweight
+* HScript: This engine contains scripting stuff
+* Modding System: This engine is able to modding from the mods folder!

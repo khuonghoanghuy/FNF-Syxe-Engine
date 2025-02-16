@@ -6,3 +6,4 @@
 --library tjson:1.4.0
 --library openfl:9.4.1
 --library lime:8.2.2
+--library polymod:1.8.0
