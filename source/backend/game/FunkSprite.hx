@@ -9,4 +9,9 @@ class FunkSprite extends FlxSprite
         super(x, y, graphic);
         antialiasing = true; // Easy to Config
     }    
+
+    public function quickAddPrefixAnim(name:String, prefix:String, looped:Bool = false)
+        animation.addByPrefix(name, prefix, 24, looped);
+    public function quickAddIncAnim(name:String, prefix:String, incs:Array<Int>, looped:Bool = false)
+        animation.addByIndices(name, prefix, incs, "", 24, looped);
 }
