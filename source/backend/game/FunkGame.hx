@@ -27,7 +27,7 @@ class FunkGame {
      * 
      * @param pros the array of dynamic, for example: 
      * ```haxe
-     * quickAddSprite({x: 100, y: 100, name: "myGraphic", image: "myGraphic"})
+     * FunkGame.quickAddSprite({x: 100, y: 100, name: "myGraphic", image: "myGraphic"})
      * ```
      */
     public static function quickAddSprite(pros:Dynamic) {
