@@ -10,7 +10,7 @@ class CoolUtil {
             return daNum;
         } catch (e) {
             trace("Catch Error: " + e.message);
-            return null;
+            return [0];
         }
     }
 }

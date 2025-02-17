@@ -29,7 +29,7 @@ class TitleState extends MusicBeatState
 
     function initThing():Void {
         // Init modding system
-        // backend.PolyHandler.init();
+        backend.PolyHandler.reload();
 
         // Init JSON
         titleData = cast tjson.TJSON.parse(Assets.getText(Paths.data("titleJson.json")));
@@ -47,7 +47,7 @@ class TitleState extends MusicBeatState
         });
         cast(FunkGame.getVariable("titleText"), FunkSprite).quickAddPrefixAnim("idle", "Press Enter to Begin", true);
         cast(FunkGame.getVariable("titleText"), FunkSprite).quickAddPrefixAnim("pressed", "ENTER PRESSED", true);
-        cast(FunkGame.getVariable("titleText"), FunkSprite).animation.play("idle", true);
+        cast(FunkGame.getVariable("titleText"), FunkSprite).playAnim("idle", true);
     }
 
     override function update(elapsed:Float) {
@@ -55,7 +55,7 @@ class TitleState extends MusicBeatState
 
         if (FlxG.keys.justPressed.ENTER) {
             camera.flash(FlxColor.WHITE, 2);
-            cast(FunkGame.getVariable("titleText"), FunkSprite).animation.play("pressed", true);
+            cast(FunkGame.getVariable("titleText"), FunkSprite).playAnim("pressed", true);
         }
     }
 }

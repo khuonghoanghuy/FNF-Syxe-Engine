@@ -14,4 +14,6 @@ class FunkSprite extends FlxSprite
         animation.addByPrefix(name, prefix, 24, looped);
     public function quickAddIncAnim(name:String, prefix:String, incs:Array<Int>, looped:Bool = false)
         animation.addByIndices(name, prefix, incs, "", 24, looped);
+    public function playAnim(name:String, force:Bool = false)
+        animation.play(name, force);
 }

@@ -31,21 +31,25 @@ class FunkGame {
      * ```
      */
     public static function quickAddSprite(pros:Dynamic) {
-        var sprite:FunkSprite = new FunkSprite(pros.x, pros.y);
-        if (pros.onlyLoad) {
-            sprite.loadGraphic(pros.image, pros.isAnimate, pros.frameWidth, pros.frameHeight);
-        }
-        if (pros.withFrames) {
-            switch (pros.framesType) {
-                case "sparrow":
-                    sprite.frames = Paths.getSparrowAtlas(pros.image);
-                case "packer":
-                    sprite.frames = Paths.getPackerAtlas(pros.image);
+        try {
+            var sprite:FunkSprite = new FunkSprite(pros.x, pros.y);
+            if (pros.onlyLoad) {
+                sprite.loadGraphic(pros.image, pros.isAnimate, pros.frameWidth, pros.frameHeight);
             }
+            if (pros.withFrames) {
+                switch (pros.framesType) {
+                    case "sparrow":
+                        sprite.frames = Paths.getSparrowAtlas(pros.image);
+                    case "packer":
+                        sprite.frames = Paths.getPackerAtlas(pros.image);
+                }
+            }
+            sprite.active = true;
+            sprite.updateHitbox();
+            setVariable(Std.string(pros.name), sprite);
+            FlxG.state.add(sprite);
+        } catch (e) {
+            trace("Catch Error: " + e.message);
         }
-        sprite.active = true;
-        sprite.updateHitbox();
-        setVariable(Std.string(pros.name), sprite);
-        FlxG.state.add(sprite);
     }
 }
