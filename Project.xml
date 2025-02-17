@@ -16,6 +16,7 @@
     <set name="BUILD_DIR" value="export/release" unless="debug" />
     <source path="source" />
     <assets path="assets" embed="false" />
+    <assets path="mods" embed="false" if="MOD_ALLOW" />
 
     <!-- Define -->
     <define name="MOD_ALLOW" />
