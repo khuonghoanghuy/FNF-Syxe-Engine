@@ -14,7 +14,7 @@ class Main extends Sprite
         return {
             "width": FlxG.width,
             "height": FlxG.height,
-            "states": null, // Set a State to load game
+            "states": states.TitleState, // Set a State to load game
             "fps": #if html5 60 #else 144 #end,
             "introHaxe": false
         }

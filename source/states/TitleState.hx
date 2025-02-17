@@ -1,5 +1,8 @@
 package states;
 
+import flixel.util.FlxColor;
+import flixel.FlxG;
+import backend.game.FunkGame;
 import backend.game.FunkSprite;
 import backend.game.FunkTimer;
 import openfl.Assets;
@@ -19,32 +22,40 @@ class TitleState extends MusicBeatState
         super.create();
 
         // Start Intro
-        FunkTimer(true, 1, function () {
+        var time:FunkTimer = new FunkTimer(true, 1, function() {
             initThing();
         });
     }    
 
     function initThing():Void {
         // Init modding system
-        backend.PolyHandler.init();
-        // Init JSON
-        titleData = tjson.TJSON(Assets.getText(Paths.data("titleJson.json")));
+        // backend.PolyHandler.init();
 
-        FunkTimer(true, 1, function () {
+        // Init JSON
+        titleData = cast tjson.TJSON.parse(Assets.getText(Paths.data("titleJson.json")));
+
+        var time = new FunkTimer(true, 1, function () {
             startIntro(); 
         });
     }
 
-    var gfDance:FunkSprite;
-    
     function startIntro():Void {
-        gfDance = new FunkSprite(titleData.gfPos[0], titleData.gfPos[1]);
-        gfDance.quickAddIncAnim("danceLeft", "gfDance", CoolUtil.genNumFromTo(0, 14));
-        gfDance.quickAddIncAnim("danceRight", "gfDance", CoolUtil.genNumFromTo(15, 30));
-        add(gfDance);
+        FunkGame.quickAddSprite({
+            name: "titleText",
+            x: titleData.titlePos[0], y: titleData.titlePos[1],
+            withFrames: true, framesType: "sparrow", image: "titleEnter"
+        });
+        cast(FunkGame.getVariable("titleText"), FunkSprite).quickAddPrefixAnim("idle", "Press Enter to Begin", true);
+        cast(FunkGame.getVariable("titleText"), FunkSprite).quickAddPrefixAnim("pressed", "ENTER PRESSED", true);
+        cast(FunkGame.getVariable("titleText"), FunkSprite).animation.play("idle", true);
     }
 
     override function update(elapsed:Float) {
         super.update(elapsed);
+
+        if (FlxG.keys.justPressed.ENTER) {
+            camera.flash(FlxColor.WHITE, 2);
+            cast(FunkGame.getVariable("titleText"), FunkSprite).animation.play("pressed", true);
+        }
     }
 }
