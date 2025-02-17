@@ -22,6 +22,13 @@ class FunkGame {
         mapVariableGame.clear();
     }
 
+    public static function getByStdIs<T:FlxBasic>(name:String, classes:String) {
+        if (Std.isOfType(getVariable(name), Type.resolveClass(classes))) {
+            return cast mapVariableGame.get(name);
+        }
+        return null;
+    }
+
     /**
      * Quick Add the Sprite without gonna do the init and add, also is will pass into a map variable!
      * 
@@ -52,4 +59,7 @@ class FunkGame {
             trace("Catch Error: " + e.message);
         }
     }
+
+    public static function doTimer(time:Float = 1, whenComplete:Dynamic)
+        return new FunkTimer(true, time, whenComplete());
 }

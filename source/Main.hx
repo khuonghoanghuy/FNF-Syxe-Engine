@@ -9,36 +9,42 @@ import flixel.FlxGame;
 
 class Main extends Sprite
 {
-    var game:FlxGame;
-    public function gameConfig() {
-        return {
-            "width": FlxG.width,
-            "height": FlxG.height,
-            "states": states.TitleState, // Set a State to load game
-            "fps": #if html5 60 #else 144 #end,
-            "introHaxe": false
-        }
-    }
-    var fpsCounter:FPS;
-    public function fpsConfig() {
-        return {
-            "x": 10,
-            "y": 3,
-            "color": FlxColor.fromString("0xFFFFFF"),
-            "font": "vcr"
-        };
-    }
+	var game:FlxGame;
 
-    public function new() {
-        super();
+	public function gameConfig()
+	{
+		return {
+			"width": FlxG.width,
+			"height": FlxG.height,
+			"states": states.TitleState, // Set a State to load game
+			"fps": #if html5 60 #else 144 #end,
+			"introHaxe": false
+		}
+	}
 
-        game = new FlxGame(gameConfig().width, gameConfig().height, gameConfig().states, gameConfig().fps, gameConfig().fps, gameConfig().introHaxe, false);
-        // Init Game
-        addChild(game);
+	var fpsCounter:FPS;
 
-        fpsCounter = new FPS(fpsConfig().x, fpsConfig().y, fpsConfig().color);
-        // Set Font for FPS
-        fpsCounter.defaultTextFormat = new TextFormat(fpsConfig().font);
-        addChild(fpsCounter);
-    }    
+	public function fpsConfig()
+	{
+		return {
+			"x": 10,
+			"y": 3,
+			"color": FlxColor.fromString("0xFFFFFF"),
+			"font": "vcr"
+		};
+	}
+
+	public function new()
+	{
+		super();
+
+		game = new FlxGame(gameConfig().width, gameConfig().height, gameConfig().states, gameConfig().fps, gameConfig().fps, gameConfig().introHaxe, false);
+		// Init Game
+		addChild(game);
+
+		fpsCounter = new FPS(fpsConfig().x, fpsConfig().y, fpsConfig().color);
+		// Set Font for FPS
+		fpsCounter.defaultTextFormat = new TextFormat(fpsConfig().font);
+		addChild(fpsCounter);
+	}
 }

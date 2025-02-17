@@ -13,7 +13,8 @@ import sys.io.File;
 
 @:keep
 @:access(openfl.display.BitmapData)
-class Paths {
+class Paths
+{
 	inline public static final DEFAULT_FOLDER:String = 'assets';
 
 	public static var SOUND_EXT:Array<String> = ['.ogg', '.wav'];
@@ -22,13 +23,15 @@ class Paths {
 	public static var currentTrackedSounds:Map<String, Sound> = [];
 	public static var localTrackedAssets:Array<String> = [];
 
-	static public function getPath(folder:Null<String>, file:String) {
+	static public function getPath(folder:Null<String>, file:String)
+	{
 		if (folder == null)
 			folder = DEFAULT_FOLDER;
 		return folder + '/' + file;
 	}
 
-	static public function file(file:String, folder:String = DEFAULT_FOLDER) {
+	static public function file(file:String, folder:String = DEFAULT_FOLDER)
+	{
 		if (#if sys FileSystem.exists(folder) && #end (folder != null && folder != DEFAULT_FOLDER))
 			return getPath(folder, file);
 		return getPath(null, file);
@@ -57,6 +60,7 @@ class Paths {
 
 	inline static public function getPackerAtlas(key:String)
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key), file('images/$key.txt'));
+
 	public static function returnGraphic(key:String, ?cache:Bool = true):FlxGraphic
 	{
 		var path:String = file('$key.png');
