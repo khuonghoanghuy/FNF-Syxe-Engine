@@ -1,5 +1,7 @@
-# FNF Syxe Engine
+# FNF Syxe Engine (W.I.P)
 A small FNF Engine
+
+This readme still wip, subject can be change from the future
 
 ## Feature
 * Simple Source: Im organize source code for better and easy to working
