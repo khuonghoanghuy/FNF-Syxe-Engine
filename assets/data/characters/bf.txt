@@ -1,0 +1,10 @@
+# basic config
+name::bf
+animation_frames::BOYFRIEND
+
+# the animation
+animation_data::singLEFT,BF NOTE LEFT,24,false
+animation_data::singRIGHT,BF NOTE RIGHT,24,false
+animation_data::singUP,BF NOTE UP,24,false
+animation_data::singDOWN,BF NOTE DOWN,24,false
+animation_data::idle,BF idle dance,24,false
