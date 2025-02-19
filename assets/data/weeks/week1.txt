@@ -1,0 +1,10 @@
+# basic config
+name::DADDY DEARSET
+
+# story mode
+story_char::dad,bf,gf
+story_bg::0xffffff
+
+# freeplay
+freeplay_icon::dad
+freeplay_song::bopeebo,fresh,dad battle

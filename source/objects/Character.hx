@@ -12,6 +12,8 @@ class Character extends FunkSprite
 	public var animations:StringMap<String>;
 	public var characterData:StringMap<String>;
 	public var isPlayer:Bool = false;
+	public var icon:String = "bf";
+	public var healthColor:String = "0x3291cb";
 
 	var animationOffsets:Map<String, {x:Float, y:Float}> = new Map();
 
@@ -24,7 +26,7 @@ class Character extends FunkSprite
 		this.animations = new StringMap<String>();
 		this.characterData = new StringMap<String>();
 
-		loadDataFromText(if (char == null) getDefaultCharacterData() else getFile(name));
+		loadDataFromText(getFile(name));
 	}
 
 	function getFile(nameChar:String)
@@ -56,58 +58,34 @@ class Character extends FunkSprite
 						this.name = value;
 					case "animation_frames":
 						this.frames = Paths.getSparrowAtlas('characters/$value');
-					// case "animation_name":
-					// 	currentAnimationName = value;
-					case "animation_data":
-						if (currentAnimationName != null)
-						{
-							var animationData = parseAnimationData(value);
-							this.animation.addByPrefix(animationData.name, animationData.prefix, animationData.frameRate, animationData.loop);
-							// currentAnimationName = null; // Reset for the next animation
-						}
-					case "scaleX":
-						this.scale.x = Std.parseFloat(value);
-					case "scaleY":
-						this.scale.y = Std.parseFloat(value);
+					case "animation_prefix_data":
+						// Split the value into parts
+						var parts:Array<String> = value.split(",");
+						var name:String = parts[0];
+						var frame:String = parts[1];
+						var speed:Int = Std.parseInt(parts[2]);
+						var loop:Bool = parts[3] == "false";
+
+						// Store the animation data
+						this.animation.addByPrefix(name, frame, speed, loop);
+						currentAnimationName = name;
+					case "animation_offset":
+						// Split the value into parts
+						var parts:Array<String> = value.split(",");
+						var x:Float = Std.parseFloat(parts[0]);
+						var y:Float = Std.parseFloat(parts[1]);
+
+						// Store the animation offset
+						this.animationOffsets.set(currentAnimationName, {x: x, y: y});
+					case "icon":
+						this.icon = value;
+					case "healthColor":
+						this.healthColor = value;
 					default:
 						// Store any other key-value pairs in characterData
 						characterData.set(key, value);
 				}
 			}
 		}
-	}
-
-	private function getDefaultCharacterData():String
-	{
-		return '
-            name::bf
-
-            animation_name::singLEFT
-            animation_data::BF SING LEFT
-
-            animation_name::singRIGHT
-            animation_data::BF SING RIGHT
-
-            animation_name::singUP
-            animation_data::BF SING UP
-
-            animation_name::singDOWN
-            animation_data::BF SING DOWN
-
-            animation_name::idle
-            animation_data::BF IDLE
-        ';
-	}
-
-	function parseAnimationData(data:String):Dynamic
-	{
-		// Example: Parse a string like "prefix,24,true" (prefix, frameRate, loop)
-		var parts:Array<String> = data.split(",");
-		return {
-			name: parts[0],
-			prefix: parts[1], // Animation prefix in the spritesheet
-			frameRate: Std.parseInt(parts[2]) == 24, // Frame rate of the animation
-			loop: parts[3] == "true" // Whether the animation loops
-		};
 	}
 }

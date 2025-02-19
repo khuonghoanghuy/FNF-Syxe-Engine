@@ -1,0 +1,12 @@
+# basic config
+name::bf
+animation_frames::BOYFRIEND
+icon::bf
+healthColor::0x3291cb
+
+# the animation
+animation_prefix_data::idle,idle,24,false
+animation_prefix_data::singLEFT,singLEFT,24,false
+animation_prefix_data::singRIGHT,singRIGHT,24,false
+animation_prefix_data::singDOWN,singDOWN,24,false
+animation_prefix_data::singUP,singUP,24,false

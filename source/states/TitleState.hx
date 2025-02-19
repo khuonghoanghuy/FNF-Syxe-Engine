@@ -24,7 +24,7 @@ class TitleState extends MusicBeatState
 	{
 		super.create();
 
-		FlxG.switchState(() -> new HolyShitISTHATCHARACTEREDITOR());
+		FlxG.switchState(() -> new FreeplayState());
 
 		FunkGame.doTimer(1, function()
 		{
@@ -52,6 +52,7 @@ class TitleState extends MusicBeatState
 
 	function startIntro():Void
 	{
+		FlxG.sound.playMusic(Paths.music("freakyMenu/freakyMenu"));
 		Conductor.changeBPM(102);
 
 		FunkGame.quickAddSprite({
@@ -80,12 +81,18 @@ class TitleState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		if (FlxG.sound.music != null)
+			Conductor.songPosition = FlxG.sound.music.time;
+
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.ENTER)
+		if (Controls.justPressed("accept"))
 		{
-			camera.flash(FlxColor.WHITE, 2);
 			cast(FunkGame.getVariable("titleText"), FunkSprite).playAnim("pressed", true);
+			camera.flash(FlxColor.WHITE, 2, function()
+			{
+				FlxG.switchState(() -> new MainMenuState());
+			});
 		}
 	}
 
