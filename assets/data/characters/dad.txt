@@ -1,7 +1,7 @@
 # basic config
-name::bf
+name::dad
 animation_frames::BOYFRIEND
-icon::bf
+icon::dad
 healthColor::0x3291cb
 
 # the animation
