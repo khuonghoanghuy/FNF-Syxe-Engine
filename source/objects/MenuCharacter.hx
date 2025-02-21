@@ -1,38 +1,28 @@
 package objects;
 
 import openfl.Assets;
-import haxe.ds.StringMap;
 import backend.game.FunkSprite;
 
 using StringTools;
 
-class Character extends FunkSprite
+class MenuCharacter extends FunkSprite
 {
-	public var name:String = "bf";
-	public var animations:StringMap<String>;
-	public var characterData:StringMap<String>;
-	public var isPlayer:Bool = false;
-	public var icon:String = "bf";
-	public var healthColor:String = "0x3291cb";
+	public var character:String;
+	public var isHavingConfirm:Bool = false;
 
 	var animationOffsets:Map<String, Array<Dynamic>>;
 
-	public function new(x:Float = 0, y:Float = 0, char:String = "bf", isPLayer:Bool = false)
+	public function new(x:Float, character:String = 'bf')
 	{
-		super(x, y);
-
 		animationOffsets = new Map<String, Array<Dynamic>>();
 
-		this.name = char;
-		this.isPlayer = isPLayer;
-		this.animations = new StringMap<String>();
-		this.characterData = new StringMap<String>();
+		super(x);
 
-		loadDataFromText(getFile(name));
+		loadDataFromText(getFile(character));
 	}
 
 	function getFile(nameChar:String)
-		return Assets.getText(Paths.data("characters/" + nameChar + ".txt"));
+		return Assets.getText(Paths.data("week/characters/" + nameChar + ".txt"));
 
 	public function loadDataFromText(textData:String):Void
 	{
@@ -57,9 +47,14 @@ class Character extends FunkSprite
 				switch (key)
 				{
 					case "name":
-						this.name = value;
-					case "animation_frames":
-						this.frames = Paths.getSparrowAtlas('characters/$value');
+						this.character = value;
+					case "pos":
+						var parts:Array<String> = value.split(",");
+						var value:Array<Float> = [Std.parseFloat(parts[0]), Std.parseFloat(parts[1])];
+						this.setPosition(value[0], value[1]);
+					case "isHavingConfirm":
+						var bool:Bool = value == "true";
+						this.isHavingConfirm = bool;
 					case "animation_prefix_data":
 						// Split the value into parts
 						var parts:Array<String> = value.split(",");
@@ -80,50 +75,9 @@ class Character extends FunkSprite
 
 						// Store the animation offset
 						addOffset(name, x, y);
-					case "icon":
-						this.icon = value;
-					case "healthColor":
-						this.healthColor = value;
-					default:
-						// Store any other key-value pairs in characterData
-						characterData.set(key, value);
 				}
 			}
 		}
-	}
-
-	override function playAnim(name:String, force:Bool = false)
-	{
-		var daOffset = animationOffsets.get(name);
-		if (animationOffsets.exists(name))
-		{
-			offset.set(daOffset[0], daOffset[1]);
-		}
-		else
-			offset.set(0, 0);
-
-		super.playAnim(name, force);
-	}
-
-	public function dance()
-	{
-		var daOffset = animationOffsets.get(name);
-		if (animationOffsets.exists(name))
-		{
-			offset.set(daOffset[0], daOffset[1]);
-		}
-		else
-			offset.set(0, 0);
-
-		// for every character
-		if (this.animation.exists("idle"))
-			this.animation.play("idle");
-
-		// for character have danceLeft/danceRight
-		if (this.animation.exists("danceLeft") && this.animation.curAnim.name != "danceLeft")
-			this.animation.play("danceLeft");
-		else if (this.animation.exists("danceRight") && this.animation.curAnim.name != "danceRight")
-			this.animation.play("danceRight");
 	}
 
 	public function addOffset(name:String, x:Float = 0, y:Float = 0)
@@ -135,6 +89,7 @@ class Character extends FunkSprite
 		}
 		else
 			offset.set(0, 0);
+
 		animationOffsets[name] = [x, y];
 	}
 }

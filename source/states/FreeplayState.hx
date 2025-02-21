@@ -90,7 +90,7 @@ class FreeplayState extends MusicBeatState
 					{
 						case "freeplay_icon":
 							iconsArray.push(lineData[1].split(',').join(','));
-						case "freeplay_song":
+						case "song":
 							addWeek(lineData[1].split(","), 1, iconsArray);
 					}
 				}

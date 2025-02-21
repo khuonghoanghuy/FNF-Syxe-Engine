@@ -1,6 +1,6 @@
 # basic config
 name::dad
-animation_frames::BOYFRIEND
+animation_frames::daddyDearest
 icon::dad
 healthColor::0x3291cb
 

@@ -1,0 +1,10 @@
+# basic config
+name::bf
+isHavingConfirm::true
+
+# the position
+pos::0,0
+
+# the animation
+animation_prefix_data::idle,idle,24,false
+animation_prefix_data::confirm,confirm,24,false

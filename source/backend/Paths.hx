@@ -55,6 +55,16 @@ class Paths
 	inline static public function font(key:String)
 		return file('fonts/$key');
 
+	inline static public function inst(key:String, ?cache:Bool = true):Sound
+	{
+		return returnSound('songs/$key/Inst', cache);
+	}
+
+	inline static public function voices(key:String, ?cache:Bool = true):Sound
+	{
+		return returnSound('songs/$key/Voices', cache);
+	}
+
 	inline static public function getSparrowAtlas(key:String)
 		return FlxAtlasFrames.fromSparrow(image(key), file('images/$key.xml'));
 
