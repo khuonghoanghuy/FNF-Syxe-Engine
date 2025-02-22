@@ -1,6 +1,5 @@
 package backend.chart;
 
-
 typedef SwagSection =
 {
 	var sectionNotes:Array<Dynamic>;

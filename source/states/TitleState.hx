@@ -24,8 +24,6 @@ class TitleState extends MusicBeatState
 	{
 		super.create();
 
-		FlxG.switchState(() -> new FreeplayState());
-
 		FunkGame.doTimer(1, function()
 		{
 			initThing();
@@ -56,6 +54,17 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(102);
 
 		FunkGame.quickAddSprite({
+			name: "gfDance",
+			x: titleData.gfPos[0],
+			y: titleData.gfPos[1],
+			withFrames: true,
+			framesType: "sparrow",
+			image: "gfDanceTitle"
+		});
+		cast(FunkGame.getVariable("gfDance"), FunkSprite).quickAddIncAnim("danceLeft", "gfDance", CoolUtil.genNumFromTo(0, 14));
+		cast(FunkGame.getVariable("gfDance"), FunkSprite).quickAddIncAnim("danceRight", "gfDance", CoolUtil.genNumFromTo(15, 30));
+
+		FunkGame.quickAddSprite({
 			name: "titleText",
 			x: titleData.titlePos[0],
 			y: titleData.titlePos[1],
@@ -66,17 +75,6 @@ class TitleState extends MusicBeatState
 		cast(FunkGame.getVariable("titleText"), FunkSprite).quickAddPrefixAnim("idle", "Press Enter to Begin", true);
 		cast(FunkGame.getVariable("titleText"), FunkSprite).quickAddPrefixAnim("pressed", "ENTER PRESSED", true);
 		cast(FunkGame.getVariable("titleText"), FunkSprite).playAnim("idle", true);
-
-		FunkGame.quickAddSprite({
-			name: "gfDance",
-			x: titleData.gfPos[0],
-			y: titleData.gfPos[1],
-			withFrames: true,
-			framesType: "sparrow",
-			image: "gfDanceTitle"
-		});
-		cast(FunkGame.getVariable("gfDance"), FunkSprite).quickAddIncAnim("danceLeft", "gfDance", CoolUtil.genNumFromTo(0, 14));
-		cast(FunkGame.getVariable("gfDance"), FunkSprite).quickAddIncAnim("danceRight", "gfDance", CoolUtil.genNumFromTo(15, 30));
 	}
 
 	override function update(elapsed:Float)
@@ -99,7 +97,7 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-		dancedLeft != dancedLeft;
+		dancedLeft = !dancedLeft;
 
 		cast(FunkGame.getVariable("gfDance"), FunkSprite).playAnim((dancedLeft ? "danceLeft" : "danceRight"));
 	}

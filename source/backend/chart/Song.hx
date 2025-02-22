@@ -3,9 +3,11 @@ package backend.chart;
 import tjson.TJSON;
 import openfl.Assets;
 import backend.chart.Section.SwagSection;
+
 using StringTools;
 
-typedef SwagSong = {
+typedef SwagSong =
+{
 	var song:String;
 	var notes:Array<SwagSection>;
 	var bpm:Int;
@@ -19,8 +21,9 @@ typedef SwagSong = {
 	var validScore:Bool;
 }
 
-class Song {
-    public var song:String;
+class Song
+{
+	public var song:String;
 	public var notes:Array<SwagSection>;
 	public var bpm:Int;
 	public var needsVoices:Bool = true;
@@ -40,14 +43,14 @@ class Song {
 
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
-		var rawJson = Assets.getText(Paths.file('data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json')).trim();
+		var rawJson = Assets.getText(Paths.file('data/songs/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json')).trim();
 
 		while (!rawJson.endsWith("}"))
 		{
 			rawJson = rawJson.substr(0, rawJson.length - 1);
 			// LOL GOING THROUGH THE BULLSHIT TO CLEAN IDK WHATS STRANGE
 		}
-        
+
 		return parseJSONshit(rawJson);
 	}
 

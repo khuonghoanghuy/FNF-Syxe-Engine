@@ -1,0 +1,11 @@
+# basic config
+name::TUTORIAL TIME
+weekImage::tutorial
+
+# story mode
+story_char::dad,bf,gf
+story_bg::0xffffff
+
+# freeplay
+freeplay_icon::gf
+song::tutorial

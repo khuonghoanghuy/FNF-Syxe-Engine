@@ -22,7 +22,7 @@ class MenuCharacter extends FunkSprite
 	}
 
 	function getFile(nameChar:String)
-		return Assets.getText(Paths.data("week/characters/" + nameChar + ".txt"));
+		return Assets.getText(Paths.data("weeks/characters/" + nameChar + ".txt"));
 
 	public function loadDataFromText(textData:String):Void
 	{

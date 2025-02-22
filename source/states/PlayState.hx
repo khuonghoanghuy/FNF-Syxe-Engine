@@ -518,8 +518,6 @@ class PlayState extends MusicBeatState
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
 					babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
-
-					babyArrow.antialiasing = true;
 					babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
 
 					switch (Math.abs(i))
@@ -580,7 +578,339 @@ class PlayState extends MusicBeatState
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
-			FlxG.switchState(() -> new FreeplayState());
+			openSubState(new subStates.PauseSubState());
+		}
+
+		keyShit();
+	}
+
+	function popUpScore(strumtime:Float)
+	{
+		var noteDiff = Math.abs(boyfriend.y - strumLine.y);
+		var score:Int = 0;
+		if (noteDiff > Conductor.safeZoneOffset * 0.9)
+		{
+			score = 50;
+		}
+		else if (noteDiff > Conductor.safeZoneOffset * 0.75)
+		{
+			score = 100;
+		}
+		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
+		{
+			score = 200;
+		}
+		else
+		{
+			score = 350;
+		}
+		songScore += score;
+	}
+
+	private function keyShit():Void
+	{
+		// HOLDING
+		var up = Controls.pressed("up");
+		var right = Controls.pressed("right");
+		var down = Controls.pressed("down");
+		var left = Controls.pressed("left");
+
+		var upP = Controls.justPressed("up");
+		var rightP = Controls.justPressed("right");
+		var downP = Controls.justPressed("down");
+		var leftP = Controls.justPressed("left");
+
+		var upR = Controls.justReleased("up");
+		var rightR = Controls.justReleased("right");
+		var downR = Controls.justReleased("down");
+		var leftR = Controls.justReleased("left");
+
+		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
+
+		// FlxG.watch.addQuick('asdfa', upP);
+		if ((upP || rightP || downP || leftP) && !boyfriend.stunned && generatedMusic)
+		{
+			boyfriend.holdTimer = 0;
+
+			var possibleNotes:Array<Note> = [];
+
+			var ignoreList:Array<Int> = [];
+
+			notes.forEachAlive(function(daNote:Note)
+			{
+				if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate)
+				{
+					// the sorting probably doesn't need to be in here? who cares lol
+					possibleNotes.push(daNote);
+					possibleNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
+
+					ignoreList.push(daNote.noteData);
+				}
+			});
+
+			if (possibleNotes.length > 0)
+			{
+				var daNote = possibleNotes[0];
+
+				if (perfectMode)
+					noteCheck(true, daNote);
+
+				// Jump notes
+				if (possibleNotes.length >= 2)
+				{
+					if (possibleNotes[0].strumTime == possibleNotes[1].strumTime)
+					{
+						for (coolNote in possibleNotes)
+						{
+							if (controlArray[coolNote.noteData])
+								goodNoteHit(coolNote);
+							else
+							{
+								var inIgnoreList:Bool = false;
+								for (shit in 0...ignoreList.length)
+								{
+									if (controlArray[ignoreList[shit]])
+										inIgnoreList = true;
+								}
+								if (!inIgnoreList)
+									badNoteCheck();
+							}
+						}
+					}
+					else if (possibleNotes[0].noteData == possibleNotes[1].noteData)
+					{
+						noteCheck(controlArray[daNote.noteData], daNote);
+					}
+					else
+					{
+						for (coolNote in possibleNotes)
+						{
+							noteCheck(controlArray[coolNote.noteData], coolNote);
+						}
+					}
+				}
+				else // regular notes?
+				{
+					noteCheck(controlArray[daNote.noteData], daNote);
+				}
+				/* 
+					if (controlArray[daNote.noteData])
+						goodNoteHit(daNote);
+				 */
+				// trace(daNote.noteData);
+				/* 
+					switch (daNote.noteData)
+					{
+						case 2: // NOTES YOU JUST PRESSED
+							if (upP || rightP || downP || leftP)
+								noteCheck(upP, daNote);
+						case 3:
+							if (upP || rightP || downP || leftP)
+								noteCheck(rightP, daNote);
+						case 1:
+							if (upP || rightP || downP || leftP)
+								noteCheck(downP, daNote);
+						case 0:
+							if (upP || rightP || downP || leftP)
+								noteCheck(leftP, daNote);
+					}
+				 */
+				if (daNote.wasGoodHit)
+				{
+					daNote.kill();
+					notes.remove(daNote, true);
+					daNote.destroy();
+				}
+			}
+			else
+			{
+				badNoteCheck();
+			}
+		}
+
+		if ((up || right || down || left) && !boyfriend.stunned && generatedMusic)
+		{
+			notes.forEachAlive(function(daNote:Note)
+			{
+				if (daNote.canBeHit && daNote.mustPress && daNote.isSustainNote)
+				{
+					switch (daNote.noteData)
+					{
+						// NOTES YOU ARE HOLDING
+						case 0:
+							if (left)
+								goodNoteHit(daNote);
+						case 1:
+							if (down)
+								goodNoteHit(daNote);
+						case 2:
+							if (up)
+								goodNoteHit(daNote);
+						case 3:
+							if (right)
+								goodNoteHit(daNote);
+					}
+				}
+			});
+		}
+
+		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && !up && !down && !right && !left)
+		{
+			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+			{
+				boyfriend.playAnim('idle');
+			}
+		}
+
+		playerStrums.forEach(function(spr:FunkSprite)
+		{
+			switch (spr.ID)
+			{
+				case 0:
+					if (leftP && spr.animation.curAnim.name != 'confirm')
+						spr.animation.play('pressed');
+					if (leftR)
+						spr.animation.play('static');
+				case 1:
+					if (downP && spr.animation.curAnim.name != 'confirm')
+						spr.animation.play('pressed');
+					if (downR)
+						spr.animation.play('static');
+				case 2:
+					if (upP && spr.animation.curAnim.name != 'confirm')
+						spr.animation.play('pressed');
+					if (upR)
+						spr.animation.play('static');
+				case 3:
+					if (rightP && spr.animation.curAnim.name != 'confirm')
+						spr.animation.play('pressed');
+					if (rightR)
+						spr.animation.play('static');
+			}
+
+			if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
+			{
+				spr.centerOffsets();
+				spr.offset.x -= 13;
+				spr.offset.y -= 13;
+			}
+			else
+				spr.centerOffsets();
+		});
+	}
+
+	function noteMiss(direction:Int = 1):Void
+	{
+		if (!boyfriend.stunned)
+		{
+			health -= 0.04;
+			if (combo > 5)
+			{
+				gf.playAnim('sad');
+			}
+			combo = 0;
+
+			songScore -= 10;
+
+			FlxG.sound.play(Paths.sound("missnote" + FlxG.random.int(1, 3)), FlxG.random.float(0.1, 0.2));
+			// FlxG.sound.play('assets/sounds/missnote1' + TitleState.soundExt, 1, false);
+			// FlxG.log.add('played imss note');
+
+			boyfriend.stunned = true;
+
+			// get stunned for 5 seconds
+			new FlxTimer().start(5 / 60, function(tmr:FlxTimer)
+			{
+				boyfriend.stunned = false;
+			});
+
+			switch (direction)
+			{
+				case 0:
+					boyfriend.playAnim('singLEFTmiss', true);
+				case 1:
+					boyfriend.playAnim('singDOWNmiss', true);
+				case 2:
+					boyfriend.playAnim('singUPmiss', true);
+				case 3:
+					boyfriend.playAnim('singRIGHTmiss', true);
+			}
+		}
+	}
+
+	function badNoteCheck()
+	{
+		// just double pasting this shit cuz fuk u
+		// REDO THIS SYSTEM!
+		var upP = Controls.justPressed("up");
+		var rightP = Controls.justPressed("right");
+		var downP = Controls.justPressed("down");
+		var leftP = Controls.justPressed("left");
+
+		if (leftP)
+			noteMiss(0);
+		if (downP)
+			noteMiss(1);
+		if (upP)
+			noteMiss(2);
+		if (rightP)
+			noteMiss(3);
+	}
+
+	function noteCheck(keyP:Bool, note:Note):Void
+	{
+		if (keyP)
+			goodNoteHit(note);
+		else
+		{
+			badNoteCheck();
+		}
+	}
+
+	function goodNoteHit(note:Note):Void
+	{
+		if (!note.wasGoodHit)
+		{
+			if (!note.isSustainNote)
+			{
+				popUpScore(note.strumTime);
+				combo += 1;
+			}
+
+			if (note.noteData >= 0)
+				health += 0.023;
+			else
+				health += 0.004;
+
+			switch (note.noteData)
+			{
+				case 0:
+					boyfriend.playAnim('singLEFT', true);
+				case 1:
+					boyfriend.playAnim('singDOWN', true);
+				case 2:
+					boyfriend.playAnim('singUP', true);
+				case 3:
+					boyfriend.playAnim('singRIGHT', true);
+			}
+
+			playerStrums.forEach(function(spr:FunkSprite)
+			{
+				if (Math.abs(note.noteData) == spr.ID)
+				{
+					spr.animation.play('confirm', true);
+				}
+			});
+
+			note.wasGoodHit = true;
+			vocals.volume = 1;
+
+			if (!note.isSustainNote)
+			{
+				note.kill();
+				notes.remove(note, true);
+				note.destroy();
+			}
 		}
 	}
 }

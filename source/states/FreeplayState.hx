@@ -1,5 +1,8 @@
 package states;
 
+import backend.HighScore;
+import backend.chart.Song;
+import backend.CoolUtil;
 import flixel.math.FlxMath;
 import openfl.Assets;
 import sys.FileSystem;
@@ -11,7 +14,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import objects.HealthIcon;
 import backend.chart.SongMetaData;
 import backend.game.FunkSprite;
-import backend.game.FunkGame;
 
 using StringTools;
 
@@ -94,7 +96,7 @@ class FreeplayState extends MusicBeatState
 							addWeek(lineData[1].split(","), 1, iconsArray);
 					}
 				}
-				songs.push(songData);
+				// songs.push(songData);
 			}
 		}
 	}
@@ -124,7 +126,16 @@ class FreeplayState extends MusicBeatState
 		if (Controls.justPressed("up") || Controls.justPressed("down"))
 			changeSelection(Controls.justPressed("up") ? -1 : 1);
 
-		scoreText.text = "Score: " + Std.string(lerpScore);
+		if (Controls.justPressed("accept"))
+		{
+			PlayState.SONG = Song.loadFromJson(HighScore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty),
+				songs[curSelected].songName.toLowerCase());
+			PlayState.isStoryMode = false;
+			PlayState.storyDifficulty = curDifficulty;
+			FlxG.switchState(() -> new PlayState());
+		}
+
+		scoreText.text = "Score: " + CoolUtil.coolLerp(lerpScore, intendedScore, 0.1);
 		diffText.text = "Difficulty: " + Std.string(curDifficulty);
 	}
 

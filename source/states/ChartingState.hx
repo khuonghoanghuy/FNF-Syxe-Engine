@@ -2,9 +2,7 @@ package states;
 
 import backend.game.FunkSprite;
 import flixel.FlxG;
-import backend.chart.Conductor;
-import backend.chart.Section;
-import backend.chart.Song;
+import backend.chart.*;
 
 // very work in progress, will probably be temporarily scuffed
 class ChartingState extends MusicBeatState
@@ -15,7 +13,7 @@ class ChartingState extends MusicBeatState
 
 		FlxG.mouse.visible = true;
 
-		var bg:FunkSprite = new FlxSprite();
+		var bg:FunkSprite = new FunkSprite();
 		bg.loadGraphic(Paths.image('menuDesat'));
 		bg.screenCenter();
 		bg.color = 0xFF888888;

@@ -1,5 +1,6 @@
 package objects;
 
+import backend.chart.Conductor;
 import openfl.Assets;
 import haxe.ds.StringMap;
 import backend.game.FunkSprite;
@@ -92,6 +93,8 @@ class Character extends FunkSprite
 		}
 	}
 
+	public var holdTimer:Float = 0.1;
+
 	override function playAnim(name:String, force:Bool = false)
 	{
 		var daOffset = animationOffsets.get(name);
@@ -103,6 +106,29 @@ class Character extends FunkSprite
 			offset.set(0, 0);
 
 		super.playAnim(name, force);
+	}
+
+	override function update(elapsed:Float)
+	{
+		super.update(elapsed);
+
+		if (!name.startsWith('bf'))
+		{
+			if (animation.curAnim.name.startsWith('sing'))
+			{
+				holdTimer += elapsed;
+			}
+
+			var dadVar:Float = 4;
+
+			if (name == 'dad')
+				dadVar = 6.1;
+			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+			{
+				dance();
+				holdTimer = 0;
+			}
+		}
 	}
 
 	public function dance()

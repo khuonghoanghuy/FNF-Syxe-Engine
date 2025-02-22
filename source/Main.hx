@@ -30,7 +30,7 @@ class Main extends Sprite
 			"x": 10,
 			"y": 3,
 			"color": FlxColor.fromString("0xFFFFFF"),
-			"font": "vcr"
+			"font": "JetBrains Mono" // my vscode font i use
 		};
 	}
 

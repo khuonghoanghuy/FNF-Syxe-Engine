@@ -22,7 +22,6 @@ class HealthIcon extends FunkSprite
 		this.isPlayer = isPlayer;
 
 		changeIcon(char);
-		antialiasing = true;
 		scrollFactor.set();
 	}
 

@@ -1,7 +1,6 @@
 # basic config
 name::DADDY DEARSET
 weekImage::week1
-song::bopeebo,fresh,dad battle
 
 # story mode
 story_char::dad,bf,gf
@@ -9,3 +8,4 @@ story_bg::0xffffff
 
 # freeplay
 freeplay_icon::dad
+song::bopeebo,fresh,dad battle

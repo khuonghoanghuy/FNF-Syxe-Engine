@@ -1,5 +1,6 @@
 package objects;
 
+import states.StoryMenuState;
 import backend.CoolUtil;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -15,7 +16,14 @@ class MenuItem extends FlxSpriteGroup
 	public function new(x:Float, y:Float, weekNum:Int = 0)
 	{
 		super(x, y);
-		week = new FlxSprite().loadGraphic(Paths.image('storymenu/week' + weekNum));
+		if (StoryMenuState.hasCustomWeekImage)
+		{
+			week = new FlxSprite().loadGraphic(Paths.image('storymenu/week/' + StoryMenuState.customWeekImage));
+		}
+		else
+		{
+			week = new FlxSprite().loadGraphic(Paths.image('storymenu/week/week' + weekNum));
+		}
 		add(week);
 	}
 
