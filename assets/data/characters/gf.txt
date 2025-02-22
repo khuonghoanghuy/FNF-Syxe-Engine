@@ -1,0 +1,13 @@
+# basic config
+name::gf
+animation_frames::GF_assets
+icon::gf
+healthColor::0x3291cb
+
+# the animation
+animation_prefix_data::singLEFT,GF left note,24,false
+animation_prefix_data::singRIGHT,GF Right Note,24,false
+animation_prefix_data::singUP,GF Up Note,24,false
+animation_prefix_data::singDOWN,GF Down Note,24,false
+animation_indices_data::danceLeft,GF Dancing Beat,0,13,,24,false
+animation_indices_data::danceRight,GF Dancing Beat,14,29,,24,false

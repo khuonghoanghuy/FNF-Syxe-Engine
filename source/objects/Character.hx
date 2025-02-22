@@ -72,6 +72,16 @@ class Character extends FunkSprite
 						// Store the animation data
 						this.animation.addByPrefix(name, frame, speed, loop);
 						currentAnimationName = name;
+					case "animation_indices_data":
+						var parts:Array<String> = value.split(",");
+						var name:String = parts[0];
+						var prefix:String = parts[1];
+						var ind:Array<Int> = backend.CoolUtil.genNumFromTo(Std.parseInt(parts[2]), Std.parseInt(parts[3]));
+						var postfix:String = parts[4];
+						var speed:Int = Std.parseInt(parts[5]);
+						var loop:Bool = parts[6] == "false";
+
+						this.animation.addByIndices(name, prefix, ind, postfix, speed, loop);
 					case "animation_offset":
 						// Split the value into parts
 						var parts:Array<String> = value.split(",");
