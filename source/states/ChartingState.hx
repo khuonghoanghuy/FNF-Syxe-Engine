@@ -1,5 +1,15 @@
 package states;
 
+import sys.io.File;
+import tjson.TJSON;
+import flixel.FlxSprite;
+import flixel.addons.display.FlxGridOverlay;
+import openfl.net.FileReference;
+import flixel.text.FlxInputText;
+import flixel.ui.FlxButton;
+import flixel.text.FlxText;
+import objects.Note;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import backend.game.FunkSprite;
 import flixel.FlxG;
 import backend.chart.Conductor;
@@ -18,7 +28,7 @@ class ChartingState extends MusicBeatState
 	var rows:Int = 16;
 
 	var curSection:Int = 0;
-	var dummyArrow:FlxSprite;
+	var dummyArrow:FunkSprite;
 
 	var beatSnap:Int = 16;
 
@@ -43,7 +53,7 @@ class ChartingState extends MusicBeatState
 	var loadSongButton:FlxButton;
 	var loadSongFromButton:FlxButton;
 
-	var strumLine:FlxSprite;
+	var strumLine:FunkSprite;
 
 	var _file:FileReference;
 
@@ -74,7 +84,8 @@ class ChartingState extends MusicBeatState
 		gridBG.screenCenter();
 		add(gridBG);
 
-		dummyArrow = new FlxSprite().makeGraphic(gridSize, gridSize);
+		dummyArrow = new FunkSprite();
+		dummyArrow.makeGraphic(gridSize, gridSize);
 		add(dummyArrow);
 
 		renderedNotes = new FlxTypedGroup<Note>();
@@ -90,8 +101,8 @@ class ChartingState extends MusicBeatState
 		{
 			try
 			{
-				var chart:String = Json.stringify(song);
-				File.saveContent(Paths.chart(Paths.formatToSongPath(song.song)), chart);
+				var chart:String = TJSON.stringify(song);
+				File.saveContent(Paths.data(Paths.formatToSongPath(song.song)), chart);
 				trace("chart saved!");
 			}
 			catch (e:Dynamic)
@@ -165,7 +176,8 @@ class ChartingState extends MusicBeatState
 		var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + gridBG.width / 2, gridBG.y).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
 		add(gridBlackLine);
 
-		strumLine = new FlxSprite(gridBG.x, 50).makeGraphic(Std.int(gridBG.width), 4);
+		strumLine = new FunkSprite(gridBG.x, 50);
+		strumLine.makeGraphic(Std.int(gridBG.width), 4);
 		add(strumLine);
 	}
 
