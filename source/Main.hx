@@ -30,7 +30,7 @@ class Main extends Sprite
 			"x": 10,
 			"y": 3,
 			"color": FlxColor.fromString("0xFFFFFF"),
-			"font": "JetBrains Mono" // my vscode font i use
+			"font": "vcr.ttf"
 		};
 	}
 
@@ -44,7 +44,7 @@ class Main extends Sprite
 
 		fpsCounter = new FPS(fpsConfig().x, fpsConfig().y, fpsConfig().color);
 		// Set Font for FPS
-		fpsCounter.defaultTextFormat = new TextFormat(fpsConfig().font);
+		fpsCounter.defaultTextFormat = new TextFormat(Paths.font(fpsConfig().font));
 		addChild(fpsCounter);
 	}
 }

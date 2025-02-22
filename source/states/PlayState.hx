@@ -185,12 +185,11 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
-		// healthBar
+		healthBar.createFilledBar(FlxColor.fromString(dad.healthColor), FlxColor.fromString(boyfriend.healthColor));
 		add(healthBar);
 
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
-		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT);
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT);
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
@@ -211,6 +210,8 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 
 		startingSong = true;
+
+		startCountdown();
 	}
 
 	public var startedCountdown:Bool;
@@ -264,10 +265,9 @@ class PlayState extends MusicBeatState
 			}
 
 			switch (swagCounter)
-
 			{
 				case 0:
-					FlxG.sound.play(Paths.sound("intro3" + altSuffix), 0.6);
+					FlxG.sound.play(Paths.sound("countdown/intro3" + altSuffix), 0.6);
 				case 1:
 					var ready:FunkSprite = new FunkSprite();
 					ready.loadGraphic(Paths.image(introAlts[0]));
@@ -286,7 +286,7 @@ class PlayState extends MusicBeatState
 							ready.destroy();
 						}
 					});
-					FlxG.sound.play(Paths.sound("intro2" + altSuffix), 0.6);
+					FlxG.sound.play(Paths.sound("countdown/intro2" + altSuffix), 0.6);
 				case 2:
 					var set:FunkSprite = new FunkSprite();
 					set.loadGraphic(Paths.image(introAlts[1]));
@@ -305,7 +305,7 @@ class PlayState extends MusicBeatState
 							set.destroy();
 						}
 					});
-					FlxG.sound.play(Paths.sound("intro1" + altSuffix), 0.6);
+					FlxG.sound.play(Paths.sound("countdown/intro1" + altSuffix), 0.6);
 				case 3:
 					var go:FunkSprite = new FunkSprite();
 					go.loadGraphic(Paths.image(introAlts[2]));
@@ -324,7 +324,7 @@ class PlayState extends MusicBeatState
 							go.destroy();
 						}
 					});
-					FlxG.sound.play(Paths.sound("introGo" + altSuffix), 0.6);
+					FlxG.sound.play(Paths.sound("countdown/introGo" + altSuffix), 0.6);
 				case 4:
 			}
 
@@ -812,7 +812,7 @@ class PlayState extends MusicBeatState
 
 			songScore -= 10;
 
-			FlxG.sound.play(Paths.sound("missnote" + FlxG.random.int(1, 3)), FlxG.random.float(0.1, 0.2));
+			FlxG.sound.play(Paths.sound("miss/missnote" + FlxG.random.int(1, 3)), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play('assets/sounds/missnote1' + TitleState.soundExt, 1, false);
 			// FlxG.log.add('played imss note');
 

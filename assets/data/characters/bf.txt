@@ -8,5 +8,16 @@ healthColor::0x3291cb
 animation_prefix_data::singLEFT,BF NOTE LEFT,24,false
 animation_prefix_data::singRIGHT,BF NOTE RIGHT,24,false
 animation_prefix_data::singUP,BF NOTE UP,24,false
-animation_prefix_data::singDOWN,BF NOTE DOWN,24,false
+animation_prefix_data::singDOWN,BF NOTE DOWN MISS,24,false
+animation_prefix_data::singLEFT,BF NOTE LEFT MISS,24,false
+animation_prefix_data::singRIGHT,BF NOTE RIGHT MISS,24,false
+animation_prefix_data::singUP,BF NOTE UP MISS,24,false
+animation_prefix_data::singDOWN,BF NOTE DOWN MISS,24,false
+animation_prefix_data::firstDeath,BF dies,24,false
+animation_prefix_data::deathLoop,BF Dead Loop,24,false
+animation_prefix_data::deathConfirm,BF Dead confirm,24,false
+animation_prefix_data::hey,BF HEY!!,24,false
+animation_prefix_data::hit,BF hit,24,false
+animation_prefix_data::preattack,bf pre attack,24,false
+animation_prefix_data::attack,boyfriend attack,24,false
 animation_prefix_data::idle,BF idle dance,24,false
