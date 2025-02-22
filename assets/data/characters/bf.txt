@@ -8,11 +8,11 @@ healthColor::0x3291cb
 animation_prefix_data::singLEFT,BF NOTE LEFT,24,false
 animation_prefix_data::singRIGHT,BF NOTE RIGHT,24,false
 animation_prefix_data::singUP,BF NOTE UP,24,false
-animation_prefix_data::singDOWN,BF NOTE DOWN MISS,24,false
-animation_prefix_data::singLEFT,BF NOTE LEFT MISS,24,false
-animation_prefix_data::singRIGHT,BF NOTE RIGHT MISS,24,false
-animation_prefix_data::singUP,BF NOTE UP MISS,24,false
-animation_prefix_data::singDOWN,BF NOTE DOWN MISS,24,false
+animation_prefix_data::singDOWN,BF NOTE DOWN,24,false
+animation_prefix_data::singDOWNmiss,BF NOTE DOWN MISS,24,false
+animation_prefix_data::singLEFTmiss,BF NOTE LEFT MISS,24,false
+animation_prefix_data::singRIGHTmiss,BF NOTE RIGHT MISS,24,false
+animation_prefix_data::singUPmiss,BF NOTE UP MISS,24,false
 animation_prefix_data::firstDeath,BF dies,24,false
 animation_prefix_data::deathLoop,BF Dead Loop,24,false
 animation_prefix_data::deathConfirm,BF Dead confirm,24,false

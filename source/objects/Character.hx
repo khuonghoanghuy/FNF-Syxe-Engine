@@ -64,33 +64,57 @@ class Character extends FunkSprite
 					case "animation_prefix_data":
 						// Split the value into parts
 						var parts:Array<String> = value.split(",");
-						var name:String = parts[0];
-						var frame:String = parts[1];
-						var speed:Int = Std.parseInt(parts[2]);
-						var loop:Bool = parts[3] == "false";
+						if (parts.length >= 4) // Ensure there are enough parts
+						{
+							var name:String = parts[0];
+							var frame:String = parts[1];
+							var speed:Int = Std.parseInt(parts[2]);
+							var loop:Bool = parts[3] != "false"; // Fix: Check for "true" or "false"
 
-						// Store the animation data
-						this.animation.addByPrefix(name, frame, speed, loop);
-						currentAnimationName = name;
+							// Add the animation
+							this.animation.addByPrefix(name, frame, speed, loop);
+							currentAnimationName = name;
+						}
+						else
+						{
+							trace("Invalid animation_prefix_data format: " + value);
+						}
+
 					case "animation_indices_data":
 						var parts:Array<String> = value.split(",");
-						var name:String = parts[0];
-						var prefix:String = parts[1];
-						var ind:Array<Int> = backend.CoolUtil.genNumFromTo(Std.parseInt(parts[2]), Std.parseInt(parts[3]));
-						var postfix:String = parts[4];
-						var speed:Int = Std.parseInt(parts[5]);
-						var loop:Bool = parts[6] == "false";
+						if (parts.length >= 7) // Ensure there are enough parts
+						{
+							var name:String = parts[0];
+							var prefix:String = parts[1];
+							var ind:Array<Int> = backend.CoolUtil.genNumFromTo(Std.parseInt(parts[2]), Std.parseInt(parts[3]));
+							var postfix:String = parts[4];
+							var speed:Int = Std.parseInt(parts[5]);
+							var loop:Bool = parts[6] != "false"; // Fix: Check for "true" or "false"
 
-						this.animation.addByIndices(name, prefix, ind, postfix, speed, loop);
+							// Add the animation
+							this.animation.addByIndices(name, prefix, ind, postfix, speed, loop);
+						}
+						else
+						{
+							trace("Invalid animation_indices_data format: " + value);
+						}
+
 					case "animation_offset":
 						// Split the value into parts
 						var parts:Array<String> = value.split(",");
-						var name:String = parts[0];
-						var x:Float = Std.parseFloat(parts[1]);
-						var y:Float = Std.parseFloat(parts[2]);
+						if (parts.length >= 3) // Ensure there are enough parts
+						{
+							var name:String = parts[0];
+							var x:Float = Std.parseFloat(parts[1]);
+							var y:Float = Std.parseFloat(parts[2]);
 
-						// Store the animation offset
-						addOffset(name, x, y);
+							// Add the animation offset
+							addOffset(name, x, y);
+						}
+						else
+						{
+							trace("Invalid animation_offset format: " + value);
+						}
 					case "icon":
 						this.icon = value;
 					case "healthColor":
@@ -152,13 +176,13 @@ class Character extends FunkSprite
 			offset.set(0, 0);
 
 		// for every character
-		if (this.animation.exists("idle"))
+		if (animation.curAnim != null && this.animation.exists("idle"))
 			this.animation.play("idle");
 
 		// for character have danceLeft/danceRight
-		if (this.animation.exists("danceLeft") && this.animation.curAnim.name != "danceLeft")
+		if (animation.curAnim != null && this.animation.exists("danceLeft") && this.animation.curAnim.name != "danceLeft")
 			this.animation.play("danceLeft");
-		else if (this.animation.exists("danceRight") && this.animation.curAnim.name != "danceRight")
+		else if (animation.curAnim != null && this.animation.exists("danceRight") && this.animation.curAnim.name != "danceRight")
 			this.animation.play("danceRight");
 	}
 

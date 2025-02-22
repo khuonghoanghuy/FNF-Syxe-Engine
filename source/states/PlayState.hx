@@ -91,6 +91,9 @@ class PlayState extends MusicBeatState
 	{
 		super.create();
 
+		if (FlxG.sound.music != null)
+			FlxG.sound.music.stop();
+
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
@@ -240,17 +243,9 @@ class PlayState extends MusicBeatState
 			boyfriend.playAnim('idle');
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-			introAssets.set('default', ['ready.png', "set.png", "go.png"]);
-			introAssets.set('school', [
-				'weeb/pixelUI/ready-pixel.png',
-				'weeb/pixelUI/set-pixel.png',
-				'weeb/pixelUI/date-pixel.png'
-			]);
-			introAssets.set('schoolEvil', [
-				'weeb/pixelUI/ready-pixel.png',
-				'weeb/pixelUI/set-pixel.png',
-				'weeb/pixelUI/date-pixel.png'
-			]);
+			introAssets.set('default', ['ready', "set", "go"]);
+			introAssets.set('school', ['weeb/pixelUI/ready-pixel', 'weeb/pixelUI/set-pixel', 'weeb/pixelUI/date-pixel']);
+			introAssets.set('schoolEvil', ['weeb/pixelUI/ready-pixel', 'weeb/pixelUI/set-pixel', 'weeb/pixelUI/date-pixel']);
 
 			var introAlts:Array<String> = introAssets.get('default');
 			var altSuffix:String = "";
