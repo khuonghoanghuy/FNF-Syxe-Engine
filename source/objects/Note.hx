@@ -1,14 +1,12 @@
 package objects;
 
+import backend.game.FunkSprite;
 import backend.chart.Conductor;
 import states.PlayState;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.util.FlxColor;
 
 using StringTools;
 
-class Note extends FlxSprite
+class Note extends FunkSprite
 {
 	public var strumTime:Float = 0;
 
@@ -18,11 +16,6 @@ class Note extends FlxSprite
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
 	public var prevNote:Note;
-
-	private var willMiss:Bool = false;
-
-	public var altNote:Bool = false;
-	public var invisNote:Bool = false;
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
@@ -34,8 +27,6 @@ class Note extends FlxSprite
 	public static var GREEN_NOTE:Int = 2;
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
-
-	public static var arrowColors:Array<Float> = [1, 1, 1, 1];
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
 	{
@@ -54,12 +45,14 @@ class Note extends FlxSprite
 
 		this.noteData = noteData;
 
-		frames = Paths.getSparrowAtlas('NOTE_assets');
+		var daStage:String = PlayState.curStage;
 
-		animation.addByPrefix('greenScroll', 'green instance');
-		animation.addByPrefix('redScroll', 'red instance');
-		animation.addByPrefix('blueScroll', 'blue instance');
-		animation.addByPrefix('purpleScroll', 'purple instance');
+		frames = Paths.getSparrowAtlas("NOTE_assets");
+
+		animation.addByPrefix('greenScroll', 'green0');
+		animation.addByPrefix('redScroll', 'red0');
+		animation.addByPrefix('blueScroll', 'blue0');
+		animation.addByPrefix('purpleScroll', 'purple0');
 
 		animation.addByPrefix('purpleholdend', 'pruple end hold');
 		animation.addByPrefix('greenholdend', 'green hold end');
@@ -145,32 +138,26 @@ class Note extends FlxSprite
 
 		if (mustPress)
 		{
-			// miss on the NEXT frame so lag doesnt make u miss notes
-			if (willMiss && !wasGoodHit)
+			// The * 0.5 us so that its easier to hit them too late, instead of too early
+			if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
+				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
 			{
-				tooLate = true;
-				canBeHit = false;
+				canBeHit = true;
 			}
 			else
-			{
-				if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset)
-				{ // The * 0.5 is so that it's easier to hit them too late, instead of too early
-					if (strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
-						canBeHit = true;
-				}
-				else
-				{
-					canBeHit = true;
-					willMiss = true;
-				}
-			}
+				canBeHit = false;
+
+			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset)
+				tooLate = true;
 		}
 		else
 		{
 			canBeHit = false;
 
 			if (strumTime <= Conductor.songPosition)
+			{
 				wasGoodHit = true;
+			}
 		}
 
 		if (tooLate)

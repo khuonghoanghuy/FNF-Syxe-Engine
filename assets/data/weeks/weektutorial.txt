@@ -1,6 +1,6 @@
 # basic config
 name::TUTORIAL TIME
-weekImage::tutorial
+weekImage::week0
 
 # story mode
 story_char::dad,bf,gf

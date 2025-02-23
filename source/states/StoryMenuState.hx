@@ -1,5 +1,10 @@
 package states;
 
+import backend.HighScore;
+import backend.CoolUtil;
+import flixel.util.FlxColor;
+import backend.game.FunkSprite;
+import flixel.group.FlxGroup;
 import backend.chart.Song;
 import backend.game.FunkTimer;
 import openfl.Assets;
@@ -16,6 +21,7 @@ class StoryMenuState extends MusicBeatState
 {
 	var scoreText:FlxText;
 	var weekData:Array<Dynamic> = [];
+	var weekNames:Array<String> = [];
 	var curWeek:Int = 0;
 	var curDifficult:Int = 0;
 
@@ -23,11 +29,36 @@ class StoryMenuState extends MusicBeatState
 	var grpMenuCharacter:FlxTypedGroup<MenuCharacter>;
 	var curDifficulty(default, null):Int = 0;
 
+	var txtWeekTitle:FlxText;
+	var txtTracklist:FlxText;
+
+	var difficultySelectors:FlxGroup;
+	var sprDifficulty:FunkSprite;
+	var leftArrow:FunkSprite;
+	var rightArrow:FunkSprite;
+
 	override function create()
 	{
 		super.create();
 
 		loadTxtWeekFile();
+
+		var yellowBG:FunkSprite = new FunkSprite(0, 56);
+		yellowBG.makeGraphic(FlxG.width, 400, 0xFFF9CF51);
+		add(yellowBG);
+
+		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
+		scoreText.setFormat("VCR OSD Mono", 32, OUTLINE, FlxColor.BLACK);
+		add(scoreText);
+
+		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
+		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT, OUTLINE, FlxColor.BLACK);
+		txtWeekTitle.alpha = 0.7;
+		add(txtWeekTitle);
+
+		var blackBarThingie:FunkSprite = new FunkSprite();
+		blackBarThingie.makeGraphic(FlxG.width, 56, FlxColor.BLACK);
+		add(blackBarThingie);
 
 		grpMenuWeek = new FlxTypedGroup<MenuItem>();
 		add(grpMenuWeek);
@@ -43,6 +74,13 @@ class StoryMenuState extends MusicBeatState
 			weekThing.screenCenter(X);
 			grpMenuWeek.add(weekThing);
 		}
+
+		txtTracklist = new FlxText(FlxG.width * 0.05, yellowBG.x + yellowBG.height + 100, 0, "Tracks", 32);
+		txtTracklist.alignment = CENTER;
+		txtTracklist.setFormat("VCR OSD Mono", 32, FlxColor.fromString("0xFFe55777"), RIGHT, OUTLINE, FlxColor.BLACK);
+		add(txtTracklist);
+
+		updateText();
 	}
 
 	public static var hasCustomWeekImage:Bool = false;
@@ -74,7 +112,8 @@ class StoryMenuState extends MusicBeatState
 								this.weekData.push({
 									value: songParts
 								});
-
+							case "name":
+								this.weekNames.push(value);
 							case "weekImage":
 								hasCustomWeekImage = true;
 								customWeekImage = value;
@@ -85,17 +124,24 @@ class StoryMenuState extends MusicBeatState
 		}
 	}
 
+	var lerpScore:Float = 0;
+	var intendedScore:Int = 0;
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.5);
+		scoreText.text = "WEEK SCORE:" + Math.round(lerpScore);
+		txtWeekTitle.text = weekNames[curWeek].toUpperCase();
+		txtWeekTitle.x = FlxG.width - (txtWeekTitle.width + 10);
 
 		if (Controls.justPressed("up") || Controls.justPressed("down"))
 			changeWeek(Controls.justPressed("up") ? -1 : 1);
 
 		if (Controls.justPressed("accept")) // test
 		{
-			PlayState.storyPlaylist = weekData[curWeek];
-			FlxG.switchState(() -> new PlayState());
+			selectWeek();
 		}
 	}
 
@@ -121,6 +167,7 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		FlxG.sound.play(Paths.sound('menu/scrollMenu'));
+		updateText();
 	}
 
 	var movedBack:Bool = false;
@@ -138,7 +185,7 @@ class StoryMenuState extends MusicBeatState
 			stopspamming = true;
 		}
 
-		PlayState.storyPlaylist = weekData[curWeek];
+		PlayState.storyPlaylist = weekData[curWeek].value;
 		PlayState.isStoryMode = true;
 		selectedWeek = true;
 
@@ -161,5 +208,24 @@ class StoryMenuState extends MusicBeatState
 		{
 			LoadingState.loadAndSwitchState(new PlayState(), true);
 		});
+	}
+
+	function updateText()
+	{
+		txtTracklist.text = "Tracks\n";
+
+		var stringThing:Array<String> = weekData[curWeek].value;
+
+		for (i in stringThing)
+		{
+			txtTracklist.text += "\n" + i;
+		}
+
+		txtTracklist.text = txtTracklist.text.toUpperCase();
+
+		txtTracklist.screenCenter(X);
+		txtTracklist.x -= FlxG.width * 0.35;
+
+		intendedScore = HighScore.getWeekScore(curWeek, curDifficulty);
 	}
 }
