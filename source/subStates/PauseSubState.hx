@@ -4,10 +4,7 @@ import states.PlayState;
 import objects.Alphabet;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.input.keyboard.FlxKey;
 import flixel.sound.FlxSound;
 import flixel.util.FlxColor;
 
@@ -17,8 +14,6 @@ class PauseSubState extends MusicBeatSubState
 
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
 	var curSelected:Int = 0;
-
-	var pauseMusic:FlxSound;
 
 	public function new(x:Float, y:Float)
 	{
@@ -79,13 +74,6 @@ class PauseSubState extends MusicBeatSubState
 						FlxG.switchState(() -> new states.FreeplayState());
 			}
 		}
-	}
-
-	override function destroy()
-	{
-		pauseMusic.destroy();
-
-		super.destroy();
 	}
 
 	function changeSelection(change:Int = 0):Void

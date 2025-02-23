@@ -15,8 +15,7 @@ class Character extends FunkSprite
 	public var isPlayer:Bool = false;
 	public var icon:String = "bf";
 	public var healthColor:String = "0x3291cb";
-
-	var animationOffsets:Map<String, Array<Dynamic>>;
+	public var animationOffsets:Map<String, Array<Dynamic>>;
 
 	public function new(x:Float = 0, y:Float = 0, char:String = "bf", isPLayer:Bool = false)
 	{

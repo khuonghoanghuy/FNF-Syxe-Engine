@@ -1,6 +1,5 @@
 package states;
 
-import states.debugbugbugbug.HolyShitISTHATCHARACTEREDITOR;
 import backend.chart.Conductor;
 import flixel.util.FlxColor;
 import flixel.FlxG;
