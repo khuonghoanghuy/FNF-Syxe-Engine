@@ -1,5 +1,7 @@
 package states;
 
+import backend.chart.Song;
+import backend.game.FunkTimer;
 import openfl.Assets;
 import flixel.FlxG;
 import sys.FileSystem;
@@ -19,6 +21,7 @@ class StoryMenuState extends MusicBeatState
 
 	var grpMenuWeek:FlxTypedGroup<MenuItem>;
 	var grpMenuCharacter:FlxTypedGroup<MenuCharacter>;
+	var curDifficulty(default, null):Int = 0;
 
 	override function create()
 	{
@@ -71,6 +74,7 @@ class StoryMenuState extends MusicBeatState
 								this.weekData.push({
 									value: songParts
 								});
+
 							case "weekImage":
 								hasCustomWeekImage = true;
 								customWeekImage = value;
@@ -90,7 +94,8 @@ class StoryMenuState extends MusicBeatState
 
 		if (Controls.justPressed("accept")) // test
 		{
-			FlxG.switchState(() -> new FreeplayState());
+			PlayState.storyPlaylist = weekData[curWeek];
+			FlxG.switchState(() -> new PlayState());
 		}
 	}
 
@@ -116,5 +121,45 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		FlxG.sound.play(Paths.sound('scrollMenu'));
+	}
+
+	var movedBack:Bool = false;
+	var selectedWeek:Bool = false;
+	var stopspamming:Bool = false;
+
+	function selectWeek()
+	{
+		if (stopspamming == false)
+		{
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+
+			grpMenuWeek.members[curWeek].startFlashing();
+			// grpWeekCharacters.members[1].animation.play('bfConfirm');
+			stopspamming = true;
+		}
+
+		PlayState.storyPlaylist = weekData[curWeek];
+		PlayState.isStoryMode = true;
+		selectedWeek = true;
+
+		var diffic = "";
+
+		switch (curDifficulty)
+		{
+			case 0:
+				diffic = '-easy';
+			case 2:
+				diffic = '-hard';
+		}
+
+		PlayState.storyDifficulty = curDifficulty;
+
+		PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
+		PlayState.storyWeek = curWeek;
+		PlayState.campaignScore = 0;
+		new FunkTimer(true, 1, function()
+		{
+			LoadingState.loadAndSwitchState(new PlayState(), true);
+		});
 	}
 }

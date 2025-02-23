@@ -117,6 +117,8 @@ class Character extends FunkSprite
 						}
 					case "icon":
 						this.icon = value;
+					case "playAnim":
+						this.playAnim(value);
 					case "healthColor":
 						this.healthColor = value;
 					default:

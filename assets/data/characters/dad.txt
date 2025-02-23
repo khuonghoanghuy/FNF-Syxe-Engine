@@ -2,7 +2,7 @@
 name::dad
 animation_frames::daddyDearest
 icon::dad
-healthColor::0x3291cb
+healthColor::0x4a1952
 
 # the animation
 animation_prefix_data::idle,idle,24,false
@@ -10,3 +10,4 @@ animation_prefix_data::singLEFT,singLEFT,24,false
 animation_prefix_data::singRIGHT,singRIGHT,24,false
 animation_prefix_data::singDOWN,singDOWN,24,false
 animation_prefix_data::singUP,singUP,24,false
+playAnim::idle

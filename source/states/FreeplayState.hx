@@ -123,6 +123,9 @@ class FreeplayState extends MusicBeatState
 	{
 		super.update(elapsed);
 
+		if (Controls.justPressed("exit"))
+			FlxG.switchState(() -> new MainMenuState());
+
 		if (Controls.justPressed("up") || Controls.justPressed("down"))
 			changeSelection(Controls.justPressed("up") ? -1 : 1);
 
@@ -132,7 +135,7 @@ class FreeplayState extends MusicBeatState
 				songs[curSelected].songName.toLowerCase());
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
-			FlxG.switchState(() -> new PlayState());
+			LoadingState.loadAndSwitchState(new PlayState(), true);
 		}
 
 		scoreText.text = "Score: " + CoolUtil.coolLerp(lerpScore, intendedScore, 0.1);

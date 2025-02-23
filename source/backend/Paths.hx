@@ -15,6 +15,13 @@ import sys.io.File;
 @:access(openfl.display.BitmapData)
 class Paths
 {
+	static var currentLevel:String;
+
+	static public function setCurrentLevel(name:String)
+	{
+		currentLevel = name.toLowerCase();
+	}
+
 	inline public static final DEFAULT_FOLDER:String = 'assets';
 
 	public static var SOUND_EXT:Array<String> = ['.ogg', '.wav'];
@@ -63,6 +70,11 @@ class Paths
 	inline static public function voices(key:String, ?cache:Bool = true):Sound
 	{
 		return returnSound('songs/$key/Voices', cache);
+	}
+
+	inline static public function songs(key:String, ?cache:Bool = true):Sound
+	{
+		return returnSound('songs/$key', cache);
 	}
 
 	inline static public function getSparrowAtlas(key:String)
