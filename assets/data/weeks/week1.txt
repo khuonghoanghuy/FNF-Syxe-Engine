@@ -8,4 +8,4 @@ story_bg::0xffffff
 
 # freeplay
 freeplay_icon::dad
-song::bopeebo,fresh,dad battle
+song::bopeebo,fresh,dadbattle

@@ -12,7 +12,7 @@ class HolyShitISTHATCHARACTEREDITOR extends MusicBeatState
 		super.create();
 
 		char = new Character(0, 0, "bf", true);
-		char.name = "bf";
+		char.curCharacter = "bf";
 		char.playAnim("idle");
 		add(char);
 	}

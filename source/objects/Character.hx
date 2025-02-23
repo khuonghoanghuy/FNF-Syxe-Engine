@@ -9,7 +9,7 @@ using StringTools;
 
 class Character extends FunkSprite
 {
-	public var name:String = "bf";
+	public var curCharacter:String = "bf";
 	public var animations:StringMap<String>;
 	public var characterData:StringMap<String>;
 	public var isPlayer:Bool = false;
@@ -24,21 +24,21 @@ class Character extends FunkSprite
 
 		animationOffsets = new Map<String, Array<Dynamic>>();
 
-		this.name = char;
+		this.curCharacter = char;
 		this.isPlayer = isPLayer;
 		this.animations = new StringMap<String>();
 		this.characterData = new StringMap<String>();
 
-		loadDataFromText(getFile(name));
+		loadDataFromText(getFile(curCharacter));
 	}
 
-	function getFile(nameChar:String)
-		return Assets.getText(Paths.data("characters/" + nameChar + ".txt"));
+	function getFile(curCharacterChar:String)
+		return Assets.getText(Paths.data("characters/" + curCharacterChar + ".txt"));
 
 	public function loadDataFromText(textData:String):Void
 	{
 		var lines:Array<String> = textData.split("\n");
-		var currentAnimationName:String = null;
+		var currentAnimationcurCharacter:String = null;
 
 		for (line in lines)
 		{
@@ -57,8 +57,8 @@ class Character extends FunkSprite
 
 				switch (key)
 				{
-					case "name":
-						this.name = value;
+					case "curCharacter":
+						this.curCharacter = value;
 					case "animation_frames":
 						this.frames = Paths.getSparrowAtlas('characters/$value');
 					case "animation_prefix_data":
@@ -66,14 +66,14 @@ class Character extends FunkSprite
 						var parts:Array<String> = value.split(",");
 						if (parts.length >= 4) // Ensure there are enough parts
 						{
-							var name:String = parts[0];
+							var curCharacter:String = parts[0];
 							var frame:String = parts[1];
 							var speed:Int = Std.parseInt(parts[2]);
 							var loop:Bool = parts[3] != "false"; // Fix: Check for "true" or "false"
 
 							// Add the animation
-							this.animation.addByPrefix(name, frame, speed, loop);
-							currentAnimationName = name;
+							this.animation.addByPrefix(curCharacter, frame, speed, loop);
+							currentAnimationcurCharacter = curCharacter;
 						}
 						else
 						{
@@ -84,7 +84,7 @@ class Character extends FunkSprite
 						var parts:Array<String> = value.split(",");
 						if (parts.length >= 7) // Ensure there are enough parts
 						{
-							var name:String = parts[0];
+							var curCharacter:String = parts[0];
 							var prefix:String = parts[1];
 							var ind:Array<Int> = backend.CoolUtil.genNumFromTo(Std.parseInt(parts[2]), Std.parseInt(parts[3]));
 							var postfix:String = parts[4];
@@ -92,7 +92,7 @@ class Character extends FunkSprite
 							var loop:Bool = parts[6] != "false"; // Fix: Check for "true" or "false"
 
 							// Add the animation
-							this.animation.addByIndices(name, prefix, ind, postfix, speed, loop);
+							this.animation.addByIndices(curCharacter, prefix, ind, postfix, speed, loop);
 						}
 						else
 						{
@@ -104,12 +104,12 @@ class Character extends FunkSprite
 						var parts:Array<String> = value.split(",");
 						if (parts.length >= 3) // Ensure there are enough parts
 						{
-							var name:String = parts[0];
+							var curCharacter:String = parts[0];
 							var x:Float = Std.parseFloat(parts[1]);
 							var y:Float = Std.parseFloat(parts[2]);
 
 							// Add the animation offset
-							addOffset(name, x, y);
+							addOffset(curCharacter, x, y);
 						}
 						else
 						{
@@ -131,24 +131,24 @@ class Character extends FunkSprite
 
 	public var holdTimer:Float = 0.1;
 
-	override function playAnim(name:String, force:Bool = false)
+	override function playAnim(curCharacter:String, force:Bool = false)
 	{
-		var daOffset = animationOffsets.get(name);
-		if (animationOffsets.exists(name))
+		var daOffset = animationOffsets.get(curCharacter);
+		if (animationOffsets.exists(curCharacter))
 		{
 			offset.set(daOffset[0], daOffset[1]);
 		}
 		else
 			offset.set(0, 0);
 
-		super.playAnim(name, force);
+		super.playAnim(curCharacter, force);
 	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
-		if (!name.startsWith('bf'))
+		if (!curCharacter.startsWith('bf'))
 		{
 			if (animation.curAnim != null && animation.curAnim.name.startsWith('sing'))
 			{
@@ -157,7 +157,7 @@ class Character extends FunkSprite
 
 			var dadVar:Float = 4;
 
-			if (name == 'dad')
+			if (curCharacter == 'dad')
 				dadVar = 6.1;
 			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
 			{
@@ -169,8 +169,8 @@ class Character extends FunkSprite
 
 	public function dance()
 	{
-		var daOffset = animationOffsets.get(name);
-		if (animationOffsets.exists(name))
+		var daOffset = animationOffsets.get(curCharacter);
+		if (animationOffsets.exists(curCharacter))
 		{
 			offset.set(daOffset[0], daOffset[1]);
 		}
@@ -188,15 +188,15 @@ class Character extends FunkSprite
 			this.animation.play("danceRight");
 	}
 
-	public function addOffset(name:String, x:Float = 0, y:Float = 0)
+	public function addOffset(curCharacter:String, x:Float = 0, y:Float = 0)
 	{
-		var daOffset = animationOffsets.get(name);
-		if (animationOffsets.exists(name))
+		var daOffset = animationOffsets.get(curCharacter);
+		if (animationOffsets.exists(curCharacter))
 		{
 			offset.set(daOffset[0], daOffset[1]);
 		}
 		else
 			offset.set(0, 0);
-		animationOffsets[name] = [x, y];
+		animationOffsets[curCharacter] = [x, y];
 	}
 }
