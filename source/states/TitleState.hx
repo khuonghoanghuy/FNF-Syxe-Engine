@@ -86,6 +86,7 @@ class TitleState extends MusicBeatState
 
 		if (Controls.justPressed("accept"))
 		{
+			FlxG.sound.play(Paths.sound('menu/confirmMenu'));
 			cast(FunkGame.getVariable("titleText"), FunkSprite).playAnim("pressed", true);
 			camera.flash(FlxColor.WHITE, 2, function()
 			{

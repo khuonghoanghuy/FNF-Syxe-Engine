@@ -120,7 +120,7 @@ class StoryMenuState extends MusicBeatState
 			bullShit++;
 		}
 
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(Paths.sound('menu/scrollMenu'));
 	}
 
 	var movedBack:Bool = false;
@@ -131,7 +131,7 @@ class StoryMenuState extends MusicBeatState
 	{
 		if (stopspamming == false)
 		{
-			FlxG.sound.play(Paths.sound('confirmMenu'));
+			FlxG.sound.play(Paths.sound('menu/confirmMenu'));
 
 			grpMenuWeek.members[curWeek].startFlashing();
 			// grpWeekCharacters.members[1].animation.play('bfConfirm');

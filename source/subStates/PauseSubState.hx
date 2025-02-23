@@ -1,5 +1,6 @@
 package subStates;
 
+import states.PlayState;
 import objects.Alphabet;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -72,7 +73,10 @@ class PauseSubState extends MusicBeatSubState
 				case "Restart Song":
 					FlxG.resetState();
 				case "Exit to menu":
-					FlxG.switchState(() -> new states.MainMenuState());
+					if (PlayState.isStoryMode)
+						FlxG.switchState(() -> new states.StoryMenuState());
+					else
+						FlxG.switchState(() -> new states.FreeplayState());
 			}
 		}
 	}
@@ -87,6 +91,7 @@ class PauseSubState extends MusicBeatSubState
 	function changeSelection(change:Int = 0):Void
 	{
 		curSelected += change;
+		FlxG.sound.play(Paths.sound('menu/scrollMenu'));
 
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;

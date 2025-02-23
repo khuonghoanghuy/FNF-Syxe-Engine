@@ -145,6 +145,7 @@ class FreeplayState extends MusicBeatState
 	function changeSelection(change:Int = 0)
 	{
 		curSelected = FlxMath.wrap(curSelected + change, 0, songs.length - 1);
+		FlxG.sound.play(Paths.sound('menu/scrollMenu'));
 
 		for (i in 0...iconArray.length)
 		{
